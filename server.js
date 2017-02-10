@@ -9,10 +9,8 @@ app.use(express.static(path.resolve(__dirname, 'build')));
 
 try {
   const env = require('dotenv');
-  const cors = require('cors');
 
   env.config({ silent: true });
-  app.use(cors());
 }
 catch(e) {
   // Do nothing - if dotenv and cors are not installed then we probably don't need them
@@ -54,6 +52,21 @@ app.get('/contacts', (req, res) => {
       });
 
       res.status(200).json(contacts);
+    }
+  })
+});
+
+app.get('/contacts/:id', (req, res) => {
+  db.collection(COLLECTION).findOne({ _id: new ObjectID(req.params.id) }, (error, doc) => {
+    if (error) {
+      handleError(res, error.message, 'Failed to fetch countdown', 404);
+    } else {
+      res.status(200).json({
+        id: doc._id,
+        name: doc.name,
+        phone: doc.phone,
+        email: doc.email
+      });
     }
   })
 });

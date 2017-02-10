@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import Match from 'react-router/Match';
-import logo from './logo.svg';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 import ContactList from './containers/ContactList';
 import ContactCreate from './containers/ContactCreate';
 import ContactEdit from './containers/ContactEdit';
@@ -9,7 +8,7 @@ import './App.css';
 class App extends Component {
   render() {
     return (
-      <div>
+      <Router>
         <nav className="navbar navbar-default">
           <div className="container-fluid">
             <div className="navbar-header">
@@ -25,7 +24,7 @@ class App extends Component {
             <Match pattern="/edit/:contactId" component={ContactEdit} />
           </div>
         </section>
-      </div>
+      </Router>
     );
   }
 }
